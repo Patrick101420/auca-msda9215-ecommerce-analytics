@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Multi-Model E-commerce Analytics</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+  :root { --ink:#1b1b1a; --ink2:#52514e; --rule:#dcdbd6; --accent:#2a78d6; --bg:#ffffff; --shade:#f4f3ef; }
+  body { font-family: "Charter", "Georgia", serif; font-size: 10.2pt; line-height: 1.42; color: var(--ink); background: var(--bg); max-width: 180mm; margin: 0 auto; }
+  h1 { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 17pt; margin: 0 0 2pt; }
+  h2 { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 12pt; margin: 13pt 0 4pt; border-bottom: 1px solid var(--rule); padding-bottom: 2pt; }
+  h3 { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10.5pt; margin: 9pt 0 3pt; }
+  p { margin: 0 0 6pt; text-align: justify; }
+  .meta { color: var(--ink2); font-size: 9.5pt; margin-bottom: 8pt; }
+  .draft { background: #fff4e5; border: 1px solid #f0c890; padding: 6pt 8pt; font-size: 9pt; margin: 6pt 0 10pt; font-family: Arial, sans-serif; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 4pt 0 8pt; font-family: "Helvetica Neue", Arial, sans-serif; }
+  th, td { border-bottom: 1px solid var(--rule); padding: 2.5pt 4pt; text-align: left; vertical-align: top; }
+  th { background: var(--shade); font-weight: 600; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  code { font-family: Menlo, monospace; font-size: 8.4pt; background: var(--shade); padding: 0 2pt; }
+  pre { font-family: Menlo, monospace; font-size: 7.8pt; background: var(--shade); padding: 5pt 7pt; margin: 4pt 0 8pt; white-space: pre-wrap; }
+  figure { margin: 6pt 0 9pt; break-inside: avoid; }
+  figure img { width: 100%; display: block; }
+  figcaption { font-size: 8.6pt; color: var(--ink2); margin-top: 2pt; font-family: Arial, sans-serif; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8pt; }
+  .callout { border-left: 3px solid var(--accent); padding: 2pt 8pt; margin: 6pt 0 8pt; background: #f5f9fe; }
+  ul, ol { margin: 0 0 6pt 15pt; padding: 0; } li { margin-bottom: 2pt; }
+  .pb { break-before: page; }
+</style>
+</head>
+<body>
+
+<h1>Distributed Multi-Model Analytics for E-commerce Data</h1>
+<div class="meta">MSDA9215 Big Data Analytics: Final Project &middot; [Student name, ID] &middot; [Date] &middot; Code: [GitHub URL]</div>
+
+<div class="draft"><b>DRAFT. Rewrite before submission.</b> This draft was prepared with AI assistance (Claude) from the
+outputs of code that was executed on the author's machine. Every number below comes from <code>output/</code> or
+<code>logs/</code> in the repository. Rewrite the text in your own words, check each claim against the
+outputs, and add an AI-use statement if the course policy requires one. Delete this box.</div>
+
+<h2>1. Overview and system architecture</h2>
+<p>The project builds an analytics system for a synthetic e-commerce platform over 90 days: 10,000 users, 5,000 products
+in 25 categories, 2,000,000 browsing sessions (20.0M page views) and 500,000 transactions (4.0 GB of JSON). Each
+technology is given the job its data model is good at:</p>
+<ul>
+<li><b>MongoDB (document)</b> is the operational store: the product catalogue, user profiles with an embedded purchase
+summary, transactions with embedded line items, and complete session journeys. It serves point lookups and
+entity-centred aggregations.</li>
+<li><b>HBase (wide-column)</b> is the time-series serving layer: a per-user activity stream keyed for newest-first
+retrieval, and a per-product daily performance series keyed for time-range scans.</li>
+<li><b>Apache Spark</b> (PySpark 4.2, local mode, 12 cores) is the analytical engine. It cleans the raw JSON into
+Parquet, computes the product-day metrics that are bulk-loaded into HBase, runs the recommendation and cohort jobs and
+Spark SQL, and joins data pulled from MongoDB and HBase for the integrated analyses.</li>
+</ul>
+<pre>generator ─► raw JSON ─┬─► MongoDB  (catalogue, users+summary, transactions, journeys)  ─┐
+                       ├─► Spark batch ─► Parquet (545 MB) ─► product×day metrics ─► HBase product_daily
+                       └─► HBase user_activity (all sessions of a 10% user sample)             │
+                 Spark integration (CLV, stock-out analysis, cross-store SQL)  ◄────────────────┘</pre>
+<p>Infrastructure ran in Docker (MongoDB 7.0, HBase 2.1 with Thrift) on one laptop (15 cores, 24 GB). The course
+generator was adapted in one respect: it kept all 2M sessions in a Python list, which needs well over 20 GB of RAM.
+The adapted version writes each 100k-session chunk as it fills, which produced identical files with a measured
+peak memory of 1.04 GB (191 s).</p>
+
+<h2>2. Data quality: what the data can and cannot support</h2>
+<p>Before any analysis, job <code>01_clean_normalize.py</code> counted rule violations instead of silently fixing them
+(<code>output/dq_report.json</code>). Several of these findings shape the conclusions later.</p>
+<table>
+<tr><th>Check</th><th class="n">Result</th><th>Consequence</th></tr>
+<tr><td>Session-ID collisions</td><td class="n">2</td><td>IDs are <code>uuid4().hex[:10]</code> (40 bits); the birthday bound predicts ≈1.8 at 2M. The two pairs belong to different users, so the natural key is (session_id, user_id). MongoDB's unique <code>_id</code> rejected both; the HBase row key (which contains user_id) was unaffected.</td></tr>
+<tr><td>“Converted” sessions with no transaction</td><td class="n">149,276</td><td>Once the 500k transaction target is reached (≈1.25M sessions in), the generator still labels sessions converted. The <i>label</i> overstates conversion: 20.3% labelled vs 12.8% with a recorded order.</td></tr>
+<tr><td>Orders not linked to any session</td><td class="n">243,389 (48.7%)</td><td>These carry 57.6% of revenue ($268.7M of $466.6M) with a higher order value ($1,104 vs $771). Journey-based attribution can explain less than half of revenue.</td></tr>
+<tr><td>Line items sold at a price ≠ list price valid at sale time</td><td class="n">27.9%</td><td>The generator stamps today's price on past sales (net effect +$170,914). Price-elasticity analysis is not possible.</td></tr>
+<tr><td>Products with <code>subcategory_id</code></td><td class="n">0 of 5,000</td><td>The brief's samples show it; the generator never writes it. Margins are therefore estimated at category level (mean of subcategory margins).</td></tr>
+<tr><td>Users: non-US country with a US state</td><td class="n">9,952</td><td>Geography is internally inconsistent, so it is used only as a label, never for spatial analysis.</td></tr>
+<tr><td>Arithmetic: subtotal = Σ items, total = subtotal − discount</td><td class="n">0 violations</td><td>Monetary fields are trustworthy.</td></tr>
+</table>
+
+<h2>3. Data modelling (Part 1)</h2>
+<h3>3.1 MongoDB: model around the entity that is read together</h3>
+<table>
+<tr><th>Collection</th><th>Design</th><th>Justification</th></tr>
+<tr><td><code>categories</code> (25)</td><td>Subcategories <b>embedded</b></td><td>Bounded (3–5) and always read with the parent.</td></tr>
+<tr><td><code>products</code> (5k)</td><td>Category id + name copied in (<b>extended reference</b>); <code>price_history</code> embedded</td><td>Catalogue pages need the category name without a <code>$lookup</code>; category names rarely change. Price history is bounded (1–3).</td></tr>
+<tr><td><code>users</code> (10k)</td><td>Profile + <b>computed</b> <code>purchase_summary</code> (orders, spend, AOV, first/last purchase) + <b>subset</b> of the 5 latest orders</td><td>Built by an aggregation with <code>$merge</code>. Profile pages and segmentation read one document. Embedding <i>all</i> orders would grow without bound (16 MB document limit).</td></tr>
+<tr><td><code>transactions</code> (500k)</td><td>Line items <b>embedded</b>, each with a product-name/category snapshot</td><td>An order is created and read atomically. The snapshot also preserves what the customer saw if the catalogue later changes.</td></tr>
+<tr><td><code>sessions</code> (2M)</td><td>Whole journey embedded; cart stored as an <i>array</i>, not a dict keyed by product id</td><td>One read = one journey. Field names that are data values cannot be indexed or unwound.</td></tr>
+</table>
+<p>Indexes follow the queries: <code>{user_id, timestamp:-1}</code> and a multikey <code>items.product_id</code> on transactions;
+<code>{user_id, start_time:-1}</code> and <code>start_time</code> on sessions. <code>explain()</code> confirms IXSCAN with
+10 keys/10 documents examined for “a user's recent orders” (1 ms). Load rates: transactions 56k docs/s, sessions
+≈30k docs/s. WiredTiger compression stored 3.2 GB of session data in 891 MB.</p>
+<p><b>Aggregation pipelines</b> (<code>mongodb/aggregations.py</code>):
+<b>P1</b> monthly revenue by category with each category's top-3 products (<code>$unwind</code> → <code>$group</code> → <code>$sort</code>
+→ <code>$group/$push</code> → <code>$slice</code>, 2.2 s, no <code>$lookup</code> thanks to the extended reference).
+<b>P2</b> spend-quintile segmentation from the embedded summary only (17 ms). A first attempt with fixed RFM cut-offs gave
+47 / 2,527 / 7,424 / 2 users because every synthetic user orders ≈50 times in 90 days, so <code>$bucketAuto</code> was used
+to let the data set the boundaries. The top quintile spends more through <i>both</i> more orders (58 vs 42) and a higher
+AOV ($1,007 vs $855). <b>P3</b> most-viewed vs best-selling products over 30 days. Rewriting the
+<code>$lookup</code> from <code>$expr/$in</code> (cannot use the multikey index) to <code>localField/foreignField</code> cut it from
+30.9 s to 19.7 s. Profiling showed the remaining 17.8 s is unwinding 664k journeys (6.6M page views). This is the
+document model's weak spot: a question <i>across</i> many journeys rather than <i>within</i> one.</p>
+
+<h3>3.2 HBase: design the row key for the scan</h3>
+<table>
+<tr><th>Table</th><th>Row key</th><th>Column families</th><th>Why</th></tr>
+<tr><td><code>user_activity</code></td><td><code>user_id#(9999999999−epoch)#session_id</code></td><td><code>s</code> summary (9 cells), <code>pv</code> page views (sparse, qualifier = sequence no.), <code>c</code> cart (sparse, qualifier = product_id)</td><td>Rows sort lexicographically, so a prefix scan returns a user's sessions <b>newest first</b> and <code>LIMIT n</code> stops early. Each family is its own HStore, so listing sessions reads only <code>s</code>, never the larger <code>pv</code> store.</td></tr>
+<tr><td><code>product_daily</code></td><td><code>product_id#yyyymmdd</code></td><td><code>m</code> counters, <code>dv</code> views by device, <code>rf</code> views by referrer (sparse)</td><td>A product's history is one contiguous key range: <code>STARTROW prod#20261101, STOPROW prod#20261201</code>. Zero counters are not stored at all.</td></tr>
+</table>
+<p>Both tables are pre-split into 5 regions on key boundaries, with ROW bloom filters and <code>VERSIONS=1</code> (metrics are
+recomputed and overwritten by Spark). For <code>user_activity</code> we sampled <b>users, not sessions</b>: all 200,080
+sessions (4.0M cells) of every 10th user. Sampling 10% of sessions would leave <i>every</i> user's stream 90% incomplete,
+which would make the per-user query wrong for everyone. <code>product_daily</code> holds all 421,769 product-days, loaded
+from Spark's output at 25.6k rows/s. Queries (<code>hbase/queries.py</code>, shell equivalents in
+<code>queries.hbase</code>):</p>
+<table>
+<tr><th>Query</th><th>HBase mechanism</th><th class="n">Rows</th><th class="n">ms</th></tr>
+<tr><td>Last 5 sessions of user_000420</td><td>prefix scan, family <code>s</code>, LIMIT 5</td><td class="n">5</td><td class="n">160 (cold) / 3.5 (warm)</td></tr>
+<tr><td>Sessions in a 14-day window (range scan)</td><td>start/stop rows from reversed timestamps</td><td class="n">26</td><td class="n">39</td></tr>
+<tr><td>One session's click-stream</td><td><code>get</code>, families <code>pv</code>,<code>c</code></td><td class="n">1</td><td class="n">41</td></tr>
+<tr><td>Converted sessions (value scan)</td><td>SingleColumnValueFilter on <code>s:status</code> (server side)</td><td class="n">35</td><td class="n">176</td></tr>
+<tr><td>Mobile sessions of users 100–199 (hybrid)</td><td>row range + family + value filter</td><td class="n">674</td><td class="n">152</td></tr>
+<tr><td>One product, one month</td><td>range scan on <code>product#yyyymm</code></td><td class="n">11</td><td class="n">31</td></tr>
+</table>
+
+<h3>3.3 Why each piece of data lives where it does</h3>
+<p>Entities that are created, updated and read as a whole (an order, a product, a profile, one journey) go to MongoDB,
+whose flexible schema and secondary indexes suit them. Append-only event streams, read by key range and time and
+sparse by nature, go to HBase: its sorted row keys make “latest N” and “between dates” a contiguous read, and absent
+cells cost nothing. Neither is used for whole-dataset analytics. That belongs to Spark over columnar Parquet. In CAP
+terms both stores are CP as deployed (single primary / single RegionServer per region). For a shop this is acceptable:
+a briefly unavailable recommendation panel is better than a wrong stock level.</p>
+
+<h2>4. Spark processing (Part 2)</h2>
+<h3>4.1 Batch pipeline and optimisation choices</h3>
+<ol>
+<li><b>Clean and normalise</b> (91 s for 4.0 GB): <b>explicit schemas</b> instead of inference. Inference costs a
+full extra pass, and because <code>cart_contents</code> is a dict keyed by product id, it would have produced a struct with
+thousands of fields. Declared as <code>MapType</code> it is one column that <code>explode()</code> unpacks. Nested arrays become
+normalised tables via <code>posexplode</code>. Timestamps are typed; empty strings become NULL; duplicates are removed on
+the composite key. The parsed sessions are <code>persist(MEMORY_AND_DISK)</code>-ed because they feed three writes plus the
+quality checks: a <b>branching lineage</b>, which is exactly when caching pays (Lecture 4). Output is Parquet (7.3×
+smaller than the JSON), with <code>page_views</code> <b>partitioned by event_date</b> for pruning.</li>
+<li><b>Product×day metrics</b>: conditional sums produce the sparse device/referrer breakdowns in a single pass
+(no <code>pivot()</code> discovery job). The result is bulk-loaded into HBase.</li>
+<li><b>Recommendations</b>: co-viewed pairs with the RDD API (<code>flatMap</code> → pairs, <code>reduceByKey</code>, which
+combines map-side before the shuffle, unlike <code>groupByKey</code>) and the per-product view counts <b>broadcast</b>. Each pair
+gets support, confidence and <b>lift</b>. “Bought together” pairs use a DataFrame self-join with broadcast dimension
+tables.</li>
+<li><b>Cohort analysis</b> by registration month, with a window <code>lag</code> to show change over time.</li>
+</ol>
+<p>Engine settings: <code>local[12]</code>, 10 GB driver, 48 shuffle partitions (the default 200 would create tiny tasks
+at this scale) and Adaptive Query Execution. One pitfall worth recording: passing a naive Python
+<code>datetime</code> into a Spark filter silently converted it from the OS zone (UTC+3), shifting a 30-day window by 3 hours.
+Bounds are now passed as strings and cast inside Spark.</p>
+
+<h3>4.2 Spark SQL</h3>
+<p><code>05_spark_sql.py</code> registers the Parquet tables as views and runs: a device × referrer funnel (CTE with
+conditional aggregation); the best product per category (<code>RANK() OVER (PARTITION BY category)</code> plus share of
+category); a <b>price-at-time-of-sale audit</b> (non-equi join to <code>price_history</code> with <code>ROW_NUMBER</code> to pick the
+price valid at the order timestamp); inter-purchase intervals with <code>LAG</code> (median 1.22 days); and weekly revenue with
+an estimated gross profit. For data that “lives” in the operational stores, MongoDB users (with the embedded summary,
+10k docs in 0.15 s) and the HBase <code>product_daily</code> series (421k rows in 4.6 s) are loaded into DataFrames,
+registered as views, and joined in a single SQL statement (country value × each country's favourite product × that
+product's HBase funnel). Reads go through the native drivers with work pushed down to each store. The Mongo-Spark and
+HBase-Spark connectors would parallelise these reads across executors, which matters at production scale, but at
+these result sizes a driver-side read costs nothing measurable.</p>
+
+<div class="two">
+<figure><img src="../viz/figures/fig2_funnel.png"><figcaption>Fig. 1. Funnel. Conversion is 20.0–20.5% for every device × referrer pair (<code>output/sql_funnel_device_referrer.csv</code>): channel makes no difference.</figcaption></figure>
+<figure><img src="../viz/figures/fig1_daily_revenue.png"><figcaption>Fig. 2. Daily revenue. Orders with no session behind them earn more than session-linked orders on every day.</figcaption></figure>
+</div>
+
+<h2>5. Integrated analytics (Part 3)</h2>
+<h3>5.1 Customer lifetime value: does browsing engagement add anything?</h3>
+<p><b>Business question.</b> Which customers will be worth most next quarter, and does on-site engagement predict
+future spend <i>beyond</i> purchase history? If it does not, a nightly join of 2M sessions to the customer table can be
+dropped. <b>Sources.</b> MongoDB transactions (one pushed-down aggregation splits each user's history at a cutoff,
+0.46 s); MongoDB users; HBase <code>user_activity</code>, family <code>s</code> only, with a server-side
+<code>SingleColumnValueFilter</code> on <code>s:start &lt; cutoff</code> (133,770 rows, 2.6 s; ISO timestamps compare
+correctly as bytes); Parquet line items → category-weighted margin per customer. <b>Method.</b> The 90 days are split
+into 60 days of calibration and a 30-day holdout. Spark MLlib linear regressions on the 1,000 HBase-sampled users (70/30
+user split): M1 = history (frequency, monetary, recency, tenure), M2 = M1 + engagement (sessions, minutes, page views,
+converted sessions). CLV(12 m) = predicted 30-day spend × 12 × estimated margin.</p>
+<table>
+<tr><th>Model</th><th class="n">Test R²</th><th class="n">Test MAE</th><th class="n">RMSE</th></tr>
+<tr><td>Naive: next 30 days = ½ × last 60 days</td><td class="n">–</td><td class="n">$4,357</td><td class="n">–</td></tr>
+<tr><td>M1 history</td><td class="n">−0.010</td><td class="n">$3,523</td><td class="n">$4,305</td></tr>
+<tr><td>M2 history + HBase engagement</td><td class="n">−0.018</td><td class="n">$3,527</td><td class="n">$4,323</td></tr>
+</table>
+<p><b>Result.</b> Neither model explains future spend (R² ≈ 0; every feature's correlation with holdout spend is
+|r| &lt; 0.04). The models beat the naive rule only by predicting the population mean. The top predicted decile
+delivered 10.0% of actual holdout spend, exactly what chance gives (Fig. 7). This is a property of the data, not a
+modelling failure: the generator assigns every session and order to <code>random.choice(users)</code>, so past behaviour
+carries no information about the future. Without the holdout design, the same pipeline would have produced
+confident-looking CLV tiers that are pure noise.</p>
+
+<h3>5.2 Where is demand lost: stock-outs or weak conversion?</h3>
+<p><b>Business question.</b> How much revenue was lost to products running out, and which in-stock products under-convert?
+<b>Sources.</b> HBase <code>product_daily</code> (views, cart adds, units per product per day); MongoDB
+<code>products</code> (stock, active flag, price, category); Spark for joins and per-category medians. The method took three
+attempts, and the rejected ones are part of the result:</p>
+<ol>
+<li><b>v1, units-per-view vs category median, all products: $125.9M “leaked”. Rejected.</b> Half the catalogue
+(2,492 products) sold out, and the site almost stops showing a product once its stock is zero. Sold-out products keep
+the sales they made but lose views, so their units-per-view is inflated (0.46 vs 0.22). That raises every category
+median and makes in-stock products look leaky. The confounder is inventory.</li>
+<li><b>v2, an event study around each product's sell-out day. Rejected.</b> Views of sold-out products are spread evenly
+across the 90 days (second-half/first-half ratio 1.02, identical to in-stock products), and the computed sell-out days
+cluster at the end of the window. The generator depletes stock in <i>generation</i> order but stamps each session with a
+<i>random</i> date, so the inventory history is inconsistent with the data's own clock. A time-series method cannot work here.</li>
+<li><b>v3, a cross-sectional comparison within category (adopted).</b> Missing views = median views of in-stock peers −
+own views. Lost units = missing views × the peers' median units-per-view. Lost revenue = lost units × price. Conversion
+leakage is measured only among in-stock products against in-stock medians.</li>
+</ol>
+<div class="two">
+<figure><img src="../viz/figures/fig4_views_vs_units.png"><figcaption>Fig. 3. Two populations: in-stock products (≈2,400 views) and sold-out products, whose exposure collapsed (median 589 views).</figcaption></figure>
+<figure><img src="../viz/figures/fig4b_lost_revenue.png"><figcaption>Fig. 4. Stock-outs cost ≈34× more than weak conversion. The rejected v1 figure is shown for contrast.</figcaption></figure>
+</div>
+<p><b>Result.</b> Estimated revenue lost to stock-outs is <b>$252.5M</b>, an upper bound equal to 52.8% of realised
+revenue. It assumes a sold-out product would have attracted and converted traffic like its in-stock peers and could have
+been restocked immediately. Weak conversion among in-stock products costs $7.4M (1.6%). Every category has 41–58% of its
+products sold out, so the problem is systemic (initial stock is drawn uniformly from 10–1,000 units against ≈500 units of
+demand per product), not category-specific. Inactive listings received only 322 views in total and do not matter.</p>
+
+<h2>6. Technology selection, with measurements</h2>
+<p>The same two questions were run on all three engines (<code>integration/benchmark_engines.py</code>, best warm run;
+answers verified identical):</p>
+<figure><img src="../viz/figures/fig8_benchmark.png" style="width:88%"><figcaption>Fig. 5. Each engine wins its own access pattern by 1–2 orders of magnitude. HBase runs under amd64 emulation here, so its numbers are pessimistic.</figcaption></figure>
+<p>For a point query (one user's latest sessions), MongoDB's B-tree index is fastest (0.3 ms) and HBase's row-key prefix
+scan is close behind (3.5 ms). Spark must scan a whole table (138 ms) and is the wrong tool. For an analytical question
+over 30 days of all products, Spark with Parquet partition pruning takes 86 ms, while MongoDB must unwind 664k documents
+(17.5 s). HBase must full-scan <code>product_daily</code> because its key is product-first (1.9 s). A date-first key would
+fix that but would create a write hotspot on “today”. The row key can serve one dominant access pattern well, and ours
+serves the per-product history. These measurements are the justification for the architecture: <b>MongoDB for entities,
+HBase for keyed time series, Spark for scans and joins</b>.</p>
+
+<h2>7. Scalability</h2>
+<ul>
+<li><b>Spark</b>: every job is expressed as DataFrame/RDD transformations without driver-side loops, except two
+deliberately small driver reads (the 5k-entry broadcast and the shuffle-test permutation, which at 100× scale should
+become a distributed <code>rand()</code>-keyed shuffle). On a cluster, the JSON → Parquet step would read from HDFS/S3, with
+partitions sized at about 128 MB.</li>
+<li><b>MongoDB</b>: shard <code>transactions</code> and <code>sessions</code> on <b>hashed</b> <code>user_id</code>. That gives even
+distribution, and per-user queries still target one shard. A <b>ranged</b> key on time would favour time-window analytics
+but hotspot inserts. The cross-journey aggregation (P3) does not scale on any shard key and belongs in Spark.</li>
+<li><b>HBase</b>: regions split automatically. User ids generated sequentially would hotspot on load, which we mitigated
+by pre-splitting. At 50× scale a salt prefix (<code>hash(user)%N</code>) would be added. Enabling Snappy/ZSTD compression
+(not available in this image) would cut the 184 MB per 200k sessions by roughly 3–4×.</li>
+<li><b>Integration</b>: replace driver-side reads with the MongoDB Spark Connector and HBase-Spark bulk get/scan, so that
+reads are parallel and locality-aware.</li>
+</ul>
+
+<h2>8. Key findings and business insights</h2>
+<div class="two">
+<figure><img src="../viz/figures/fig3_category_revenue.png"><figcaption>Fig. 6. Revenue is spread evenly ($16.5–22.2M per category), but estimated margins range from 17.8% to 36.3%, so profit ranking ≠ revenue ranking (Spearman 0.34). Kelly-Santiago is #2 by revenue but #18 by profit.</figcaption></figure>
+<div>
+<figure><img src="../viz/figures/fig6_lift_vs_null.png"><figcaption>Fig. 7a. Co-view lift for 1.69M pairs matches randomly shuffled baskets (median 1.43 vs 1.43). The highest “lifts” (up to 560) are pairs seen 3 times.</figcaption></figure>
+<figure><img src="../viz/figures/fig7_clv_deciles.png"><figcaption>Fig. 7b. Predicted CLV deciles vs realised holdout spend: flat.</figcaption></figure>
+</div>
+</div>
+<div class="callout">
+<ol>
+<li><b>Fix inventory before anything else.</b> Half the catalogue sold out, and sold-out products lost 73% of their exposure.
+Stock-outs are the single largest revenue lever (≈$250M upper bound vs $7M from conversion). Action: reorder points
+from daily sell-through (available per product in HBase <code>product_daily</code>).</li>
+<li><b>Measure the ~58% of revenue that has no session behind it.</b> Attribution and journey analytics can explain less
+than half of revenue until those orders are linked.</li>
+<li><b>Treat “converted” labels and historical prices as unreliable</b> (149k false conversions; 27.9% of lines at the wrong
+price) until the pipeline is fixed.</li>
+<li><b>Don't ship recommendations or CLV tiers built on this data.</b> The shuffle test and the holdout show there is no
+signal. With real data the same pipelines apply unchanged, and the validation steps will show whether signal exists.</li>
+<li><b>Manage categories on profit, not revenue.</b> With margins of 17.8–36.3%, the revenue leaderboard misleads:
+Kelly-Santiago ranks #2 by revenue but #18 by estimated profit. (Caveat: margins are category means, see §2.)</li>
+<li><b>No channel, device or cohort effects.</b> Marketing spend cannot be allocated on these dimensions. Every cohort
+places 0.55 orders/member/day (±6%) once partial months are normalised by days observed.</li>
+</ol>
+</div>
+<figure><img src="../viz/figures/fig5_cohorts.png" style="width:72%"><figcaption>Fig. 8. Cohorts, normalised per observed day (raw monthly figures swung ±65% purely because August and November are partial months).</figcaption></figure>
+
+<h2>9. Limitations and future work</h2>
+<ul>
+<li><b>Synthetic data.</b> Users, products and timestamps are drawn independently. Several analyses therefore return
+well-supported <i>negative</i> results; they demonstrate method, not real customer behaviour.</li>
+<li><b>Single-node deployment.</b> Spark local mode, one MongoDB instance and standalone HBase under x86 emulation.
+Absolute timings are indicative; the orders-of-magnitude differences are what matter.</li>
+<li>The stock-out loss is an <b>upper bound</b> under stated assumptions. Margins are category-level estimates because
+products lack subcategories. CLV ignores discounting and churn.</li>
+<li>HBase holds a 10% user sample of sessions. The CLV model therefore uses 1,000 users.</li>
+<li><b>Future work:</b> Structured Streaming from a message broker (e.g. MQTT/Kafka) into HBase counters for real-time
+product metrics; MongoDB change streams to keep <code>purchase_summary</code> current; the Mongo/HBase Spark connectors;
+BG/NBD + Gamma-Gamma CLV on real data; collaborative filtering (ALS), but only after a lift-vs-null test shows there is
+signal to learn.</li>
+</ul>
+
+<p style="font-size:8.6pt;color:#52514e;margin-top:10pt"><b>Reproducibility.</b> <code>./run_all.sh</code> rebuilds everything
+(≈15 min). Session and transaction IDs use unseeded <code>uuid4</code>, so IDs differ between runs; all other values are seeded.</p>
+</body>
+</html>

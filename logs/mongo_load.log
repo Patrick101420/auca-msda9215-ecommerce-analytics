@@ -1,0 +1,35 @@
+Loading into MongoDB: mongodb://localhost:27017 ecommerce
+  categories            25 docs     0.0s  (3,976 docs/s)
+  products           5,000 docs     0.0s  (171,403 docs/s)
+  users             10,000 docs     0.1s  (197,449 docs/s)
+  transactions     500,000 docs     8.9s  (56,401 docs/s)
+  sessions_0.json    100,000 docs     3.1s  (32,566 docs/s)
+  sessions_1.json    100,000 docs     3.3s  (30,325 docs/s)
+  sessions_2.json    100,000 docs     3.3s  (30,668 docs/s)
+  sessions_3.json    100,000 docs     3.2s  (31,636 docs/s)
+  sessions_4.json    100,000 docs     3.1s  (32,050 docs/s)
+  sessions_5.json    100,000 docs     3.3s  (30,217 docs/s)
+  sessions_6.json    100,000 docs     3.0s  (33,729 docs/s)
+  sessions_7.json    100,000 docs     3.5s  (28,212 docs/s)
+  sessions_8.json    100,000 docs     4.0s  (24,943 docs/s)
+  sessions_9.json    100,000 docs     4.5s  (22,266 docs/s)
+  sessions_10.json    100,000 docs     6.0s  (16,574 docs/s)
+  sessions_11.json    100,000 docs    17.3s  (5,765 docs/s)
+  sessions_12.json    100,000 docs    12.9s  (7,779 docs/s)
+  sessions_13.json    100,000 docs    10.9s  (9,195 docs/s)
+  sessions_14.json    100,000 docs    11.6s  (8,610 docs/s)
+  sessions_15.json    100,000 docs    11.7s  (8,547 docs/s)
+  sessions_16.json    100,000 docs     8.3s  (12,029 docs/s)
+    bulk write errors: 1
+  sessions_17.json     99,999 docs     8.5s  (11,799 docs/s)
+  sessions_18.json    100,000 docs     3.8s  (26,501 docs/s)
+    bulk write errors: 1
+  sessions_19.json     99,999 docs     3.7s  (27,346 docs/s)
+  sessions total 1,999,998
+  indexes built in 14.1s
+  purchase_summary embedded into 10,000 users in 2.8s
+  categories    count=        25  data=     0.0 MB  storage=     0.0 MB  indexes=   0.0 MB
+  products      count=     5,000  data=     1.6 MB  storage=     0.5 MB  indexes=   0.1 MB
+  users         count=    10,000  data=     7.3 MB  storage=     0.5 MB  indexes=   0.1 MB
+  transactions  count=   500,000  data=   306.9 MB  storage=   113.2 MB  indexes=  36.3 MB
+  sessions      count= 1,999,998  data=  3203.4 MB  storage=   891.4 MB  indexes= 129.0 MB

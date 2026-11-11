@@ -1,0 +1,58 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+12:47:46 WARN TaskSetManager: Stage 23 contains a task of very large size (1919 KiB). The maximum recommended task size is 1000 KiB.
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+Top co-viewed pairs by lift:
++----------+----------+-----------------+--------------------+--------------------+------------------+
+|product_a |product_b |sessions_together|conf_a_to_b         |conf_b_to_a         |lift              |
++----------+----------+-----------------+--------------------+--------------------+------------------+
+|prod_01267|prod_03880|3                |0.0375              |0.022388059701492536|559.7014925373135 |
+|prod_03962|prod_03992|3                |0.016574585635359115|0.021897810218978103|241.964753800863  |
+|prod_02791|prod_03062|3                |0.016666666666666666|0.02142857142857143 |238.0952380952381 |
+|prod_00203|prod_03685|3                |0.02027027027027027 |0.016666666666666666|225.22522522522522|
+|prod_01829|prod_04444|3                |0.028846153846153848|0.010416666666666666|200.32051282051282|
+|prod_02750|prod_04621|3                |0.023255813953488372|0.012658227848101266|196.25159454420566|
+|prod_04023|prod_04981|3                |0.016216216216216217|0.017964071856287425|194.20618223013432|
+|prod_00052|prod_04826|3                |0.013452914798206279|0.0196078431372549  |175.85509540138926|
+|prod_01231|prod_03962|3                |0.015544041450777202|0.016574585635359115|171.75736409698567|
+|prod_01558|prod_01626|3                |0.026785714285714284|0.00946372239747634 |168.99504281207751|
++----------+----------+-----------------+--------------------+--------------------+------------------+
+only showing top 10 rows
+{
+  "sessions": 2000000,
+  "sessions_with_2plus_viewed_products": 1720113,
+  "coview_observed": {
+    "pairs": 1687228,
+    "mean_lift": 1.791,
+    "median": 1.428,
+    "p95": 3.263,
+    "p99": 7.746,
+    "max": 559.701
+  },
+  "coview_shuffled_null": {
+    "pairs": 1669329,
+    "mean_lift": 1.783,
+    "median": 1.431,
+    "p95": 3.606,
+    "p99": 5.907,
+    "max": 96.987
+  },
+  "copurchase_pairs_total": 589516,
+  "copurchase_max_orders_together": 5,
+  "copurchase_pairs_seen_2plus": 20968
+}
+real 53.77
+user 11.93
+sys 1.07

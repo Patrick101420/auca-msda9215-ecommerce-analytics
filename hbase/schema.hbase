@@ -1,0 +1,41 @@
+# HBase schema: run with   docker exec -i ecom-hbase hbase shell < hbase/schema.hbase
+# (load_hbase.py creates the same tables through Thrift if they don't exist.)
+
+# ---------------------------------------------------------------------------
+# user_activity: one row per SESSION, keyed for "a user's activity stream, newest first"
+#   rowkey  = <user_id> '#' <reverse_ts> '#' <session_id>
+#             reverse_ts = 9999999999 - epoch_seconds(start_time), zero-padded to 10 digits.
+#             Rows sort lexicographically, so a prefix scan on 'user_000042#' returns that
+#             user's sessions newest-first, and LIMIT n gives "the last n sessions" without
+#             reading the rest.
+#   s:   session summary (small, read by almost every query)
+#   pv:  page views, SPARSE. Qualifier = 3-digit sequence number, value = compact record.
+#        Sessions have 4-16 views, so column sets differ per row; empty cells cost nothing.
+#   c:   cart, SPARSE. Qualifier = product_id, value = qty|unit_price.
+#   Separate families = separate HStores/HFiles. A "list recent sessions" scan touches
+#   only the s store, not the larger pv store.
+# Pre-split on user_id boundaries so loading ordered user ids doesn't hammer one region.
+# ---------------------------------------------------------------------------
+create 'user_activity',
+  {NAME => 's',  VERSIONS => 1, COMPRESSION => 'NONE', BLOOMFILTER => 'ROW'},
+  {NAME => 'pv', VERSIONS => 1, COMPRESSION => 'NONE', BLOOMFILTER => 'ROW'},
+  {NAME => 'c',  VERSIONS => 1, COMPRESSION => 'NONE', BLOOMFILTER => 'ROW'},
+  SPLITS => ['user_002000', 'user_004000', 'user_006000', 'user_008000']
+
+# ---------------------------------------------------------------------------
+# product_daily: product performance time series
+#   rowkey = <product_id> '#' <yyyymmdd>
+#   A time-range scan for one product is STARTROW 'prod_00123#20260901', STOPROW 'prod_00123#20261001'.
+#   m:   core counters (views, view_seconds, cart_adds, units_sold, revenue, orders)
+#   dv:  views by device type, sparse (mobile/desktop/tablet only where seen)
+#   rf:  views by referrer, sparse
+# VERSIONS => 1: counters are recomputed by the Spark batch job and overwritten, not appended.
+# ---------------------------------------------------------------------------
+create 'product_daily',
+  {NAME => 'm',  VERSIONS => 1, BLOOMFILTER => 'ROW'},
+  {NAME => 'dv', VERSIONS => 1, BLOOMFILTER => 'ROW'},
+  {NAME => 'rf', VERSIONS => 1, BLOOMFILTER => 'ROW'},
+  SPLITS => ['prod_01000', 'prod_02000', 'prod_03000', 'prod_04000']
+
+list
+describe 'user_activity'

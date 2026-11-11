@@ -1,0 +1,152 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+
+===== funnel_device_referrer =====
++-----------+-------------+--------+------------+-------------+--------+---------+-------------+----------------+
+|device_type|referrer     |sessions|product_view|added_to_cart|checkout|converted|conv_rate_pct|cart_to_conv_pct|
++-----------+-------------+--------+------------+-------------+--------+---------+-------------+----------------+
+|tablet     |email        |133686  |132018      |86999        |58606   |27411    |20.50        |31.5            |
+|tablet     |direct       |133495  |131866      |86978        |58451   |27330    |20.47        |31.4            |
+|desktop    |direct       |133298  |131635      |86624        |58473   |27225    |20.42        |31.4            |
+|mobile     |direct       |133125  |131421      |86266        |58254   |27179    |20.42        |31.5            |
+|tablet     |social       |133727  |132097      |86915        |58456   |27214    |20.35        |31.3            |
+|desktop    |search_engine|132830  |131152      |85954        |57905   |26993    |20.32        |31.4            |
+|tablet     |affiliate    |133653  |132019      |86795        |58426   |27138    |20.30        |31.3            |
+|tablet     |search_engine|133533  |131797      |86973        |58399   |27098    |20.29        |31.2            |
+|desktop    |social       |133477  |131805      |86736        |58278   |27036    |20.26        |31.2            |
+|mobile     |search_engine|132943  |131297      |86201        |57984   |26917    |20.25        |31.2            |
+|mobile     |affiliate    |133370  |131769      |86571        |58244   |27006    |20.25        |31.2            |
+|desktop    |email        |133148  |131509      |86229        |58119   |26955    |20.24        |31.3            |
+|mobile     |social       |133395  |131774      |86492        |58294   |26943    |20.20        |31.2            |
+|mobile     |email        |133101  |131529      |86321        |57919   |26797    |20.13        |31.0            |
+|desktop    |affiliate    |133219  |131576      |86354        |57714   |26645    |20.00        |30.9            |
++-----------+-------------+--------+------------+-------------+--------+---------+-------------+----------------+
+
+
+===== top_product_per_category =====
++-------------------------------+-----------+----------+---------------------------------------------+-----+---------+-----+--------------+---+---------------+
+|category_name                  |category_id|product_id|name                                         |units|revenue  |views|units_per_view|rnk|pct_of_category|
++-------------------------------+-----------+----------+---------------------------------------------+-----+---------+-----+--------------+---+---------------+
+|Skinner-Romero                 |cat_009    |prod_00154|Switchable Hybrid Focus Group                |578  |343418.7 |2314 |0.2498        |1  |1.91           |
+|Phillips Inc                   |cat_018    |prod_00253|Profound High-Level Adapter                  |609  |332124.24|2320 |0.2625        |1  |1.64           |
+|Patterson, Smith and Jones     |cat_024    |prod_02908|Distributed Optimizing Framework             |587  |328168.22|2396 |0.245         |1  |1.69           |
+|Smith Ltd                      |cat_013    |prod_01652|Intuitive Optimizing Success                 |584  |327828.4 |2372 |0.2462        |1  |1.9            |
+|Ellis, Baker and Wright        |cat_006    |prod_02303|Phased Bottom-Line Hardware                  |575  |326893.25|2394 |0.2402        |1  |1.67           |
+|Anderson, Walls and Duncan     |cat_014    |prod_02419|Digitized Maximized Software                 |577  |324262.46|2373 |0.2432        |1  |1.51           |
+|Wright-Leblanc                 |cat_016    |prod_00967|Streamlined 24Hour Complexity                |593  |323475.57|2384 |0.2487        |1  |1.9            |
+|Bush Inc                       |cat_003    |prod_03061|Secured Leadingedge Methodology              |569  |318890.36|2388 |0.2383        |1  |1.62           |
+|Spence PLC                     |cat_011    |prod_03278|Adaptive Grid-Enabled Standardization        |587  |315483.15|1239 |0.4738        |1  |1.6            |
+|Rodriguez, Figueroa and Sanchez|cat_000    |prod_04136|Decentralized Context-Sensitive Collaboration|592  |315358.4 |1191 |0.4971        |1  |1.91           |
+|King-Odonnell                  |cat_023    |prod_00401|Integrated Cohesive Initiative               |541  |315208.24|2382 |0.2271        |1  |1.83           |
+|Hancock Inc                    |cat_017    |prod_04673|Cross-Platform Solution-Oriented Flexibility |541  |310972.21|2344 |0.2308        |1  |1.57           |
+|Baldwin Ltd                    |cat_001    |prod_00107|Balanced Well-Modulated System Engine        |532  |305282.88|2392 |0.2224        |1  |1.7            |
+|Kelly-Santiago                 |cat_004    |prod_00585|Devolved Web-Enabled Capability              |558  |304121.16|2361 |0.2363        |1  |1.4            |
+|Moore, Becker and Carlson      |cat_007    |prod_01496|Right-Sized User-Facing Function             |577  |301153.61|2338 |0.2468        |1  |1.67           |
+|Cameron-Parsons                |cat_005    |prod_00410|Pre-Emptive Background Migration             |546  |296363.34|1177 |0.4639        |1  |1.33           |
+|Carney-Santos                  |cat_012    |prod_02028|Intuitive Fault-Tolerant Middleware          |597  |296171.7 |2503 |0.2385        |1  |1.48           |
+|Powell PLC                     |cat_019    |prod_00824|Sharable Systematic Parallelism              |523  |295238.73|2435 |0.2148        |1  |1.46           |
+|Preston Ltd                    |cat_022    |prod_01941|Decentralized Fault-Tolerant Encoding        |525  |294362.25|2429 |0.2161        |1  |1.57           |
+|Mitchell-Kim                   |cat_021    |prod_04940|Ergonomic Incremental Function               |523  |291766.01|2408 |0.2172        |1  |1.43           |
+|Burns-Rodriguez                |cat_010    |prod_01333|Adaptive Multimedia Strategy                 |547  |286491.25|2504 |0.2185        |1  |1.42           |
+|Rodriguez-Graham               |cat_008    |prod_02709|Streamlined Reciprocal Support               |539  |279315.19|2412 |0.2235        |1  |1.58           |
+|Brewer, Bryant and Hickman     |cat_020    |prod_03639|Virtual Interactive Extranet                 |547  |274490.07|2421 |0.2259        |1  |1.42           |
+|Owens-Daniel                   |cat_015    |prod_01950|Multi-Tiered Multi-State Graphic Interface   |504  |272936.16|1139 |0.4425        |1  |1.45           |
+|James LLC                      |cat_002    |prod_04326|Re-Engineered 6Thgeneration Project          |509  |267057.03|2358 |0.2159        |1  |1.54           |
++-------------------------------+-----------+----------+---------------------------------------------+-----+---------+-----+--------------+---+---------------+
+
+
+===== price_at_time_of_sale =====
++-------------+-------------------+-------------------+------------+--------+--------------+
+|lines_checked|sold_at_valid_price|sold_at_other_price|pct_mismatch|avg_diff|revenue_effect|
++-------------+-------------------+-------------------+------------+--------+--------------+
+|954134       |687755             |266379             |27.92       |0.179   |170914.46     |
++-------------+-------------------+-------------------+------------+--------+--------------+
+
+
+===== repeat_purchase_interval =====
++-------------+--------+-----------+--------+---------+
+|repeat_orders|p25_days|median_days|p75_days|mean_days|
++-------------+--------+-----------+--------+---------+
+|490000       |0.51    |1.22       |2.44    |1.76     |
++-------------+--------+-----------+--------+---------+
+
+
+===== category_weekly_revenue =====
++--------------------------+-------------------+-------------+----------------+
+|category_name             |week               |gross_revenue|est_gross_profit|
++--------------------------+-------------------+-------------+----------------+
+|Cameron-Parsons           |2026-08-10 00:00:00|864925.99    |237854.65       |
+|Anderson, Walls and Duncan|2026-08-10 00:00:00|847099.33    |207539.34       |
+|Kelly-Santiago            |2026-08-10 00:00:00|828133.92    |170595.59       |
+|Phillips Inc              |2026-08-10 00:00:00|812776.99    |201568.69       |
+|Burns-Rodriguez           |2026-08-10 00:00:00|799547.76    |146583.76       |
+|Powell PLC                |2026-08-10 00:00:00|798517.41    |194838.25       |
+|Spence PLC                |2026-08-10 00:00:00|791643.36    |188411.12       |
+|Bush Inc                  |2026-08-10 00:00:00|779612.28    |206597.25       |
+|Ellis, Baker and Wright   |2026-08-10 00:00:00|777282.38    |166338.43       |
+|Patterson, Smith and Jones|2026-08-10 00:00:00|767195.84    |207142.88       |
++--------------------------+-------------------+-------------+----------------+
+only showing top 10 rows/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/types.py:778: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+12:49:30 WARN TaskSetManager: Stage 113 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+12:49:31 WARN TaskSetManager: Stage 131 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+
+[mongo] users: 10,000 docs in 0.15s
+[hbase] product_daily: 421,769 rows in 4.6s
+
+===== cross_store_country_value =====
++-------+------+---------+----------+-----------+-----------------+--------------------------+
+|country|buyers|avg_spent|revenue   |top_product|top_product_views|top_product_units_per_view|
++-------+------+---------+----------+-----------+-----------------+--------------------------+
+|LA     |69    |45751.3  |3156839.43|prod_04276 |2354             |0.2218                    |
+|CZ     |66    |47550.99 |3138365.52|prod_02631 |1071             |0.4239                    |
+|IE     |68    |45192.43 |3073085.21|prod_02499 |2385             |0.2105                    |
+|ET     |62    |48530.05 |3008863.28|prod_01233 |1120             |0.4375                    |
+|BO     |66    |45443.94 |2999300.19|prod_01905 |2313             |0.2296                    |
+|BA     |65    |46059.53 |2993869.62|prod_01130 |2387             |0.2459                    |
+|UA     |64    |46490.69 |2975404.46|prod_04680 |2340             |0.2171                    |
+|AF     |63    |46908.77 |2955252.43|prod_01112 |1249             |0.4299                    |
+|MX     |63    |45958.7  |2895398.04|prod_00634 |2386             |0.2406                    |
+|TR     |61    |47373.28 |2889769.93|prod_02221 |2456             |0.2345                    |
++-------+------+---------+----------+-----------+-----------------+--------------------------+
+only showing top 10 rows
+real 24.26
+user 3.09
+sys 0.29

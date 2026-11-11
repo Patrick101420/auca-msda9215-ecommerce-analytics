@@ -1,0 +1,42 @@
+
+## Q1 - last 5 sessions of a user (prefix scan, newest first, summary family only)  [160.3 ms]
+  user_000420#8205767889#sess_2d79c34f4b {'s:browser': 'Edge', 's:country': 'MK', 's:dev': 'tablet', 's:dur': '607', 's:npv': '6', 's:os': 'iOS', 's:ref': 'email', 's:start': '2026-11-09T16:48:30.721365', 's:status': 'browsed'}
+  user_000420#8205835688#sess_b31e9d0a12 {'s:browser': 'Firefox', 's:country': 'MK', 's:dev': 'mobile', 's:dur': '521', 's:npv': '8', 's:os': 'Windows', 's:ref': 'email', 's:start': '2026-11-08T21:58:31.975777', 's:status': 'abandoned'}
+  user_000420#8205915857#sess_7c403fe731 {'s:browser': 'Safari', 's:country': 'MK', 's:dev': 'desktop', 's:dur': '2359', 's:npv': '13', 's:os': 'macOS', 's:ref': 'direct', 's:start': '2026-11-07T23:42:22.152083', 's:status': 'converted'}
+  user_000420#8205928476#sess_1596806820 {'s:browser': 'Firefox', 's:country': 'MK', 's:dev': 'mobile', 's:dur': '2115', 's:npv': '11', 's:os': 'Windows', 's:ref': 'direct', 's:start': '2026-11-07T20:12:03.852049', 's:status': 'converted'}
+  user_000420#8205949610#sess_d5c26faabd {'s:browser': 'Safari', 's:country': 'MK', 's:dev': 'tablet', 's:dur': '1139', 's:npv': '15', 's:os': 'Windows', 's:ref': 'direct', 's:start': '2026-11-07T14:19:49.778492', 's:status': 'abandoned'}
+
+## Q2 - RANGE SCAN: a user's sessions in a date window (start/stop rows from reversed ts)  [38.7 ms]
+  26 sessions between 2026-10-26T00:00:00.721365 and 2026-11-09T16:48:30.721365 (inclusive of the start, exclusive of the end row)
+  user_000420#8205767889#sess_2d79c34f4b 2026-11-09T16:48:30.721365 browsed
+  user_000420#8205835688#sess_b31e9d0a12 2026-11-08T21:58:31.975777 abandoned
+  user_000420#8205915857#sess_7c403fe731 2026-11-07T23:42:22.152083 converted
+  user_000420#8205928476#sess_1596806820 2026-11-07T20:12:03.852049 converted
+  user_000420#8205949610#sess_d5c26faabd 2026-11-07T14:19:49.778492 abandoned
+
+## Q3 - GET one session's full click-stream (page-view family)  [40.6 ms]
+  pv:000 = category_listing||cat_021|238|0
+  pv:001 = product_detail|prod_04799|cat_004|97|238
+  pv:002 = cart|||59|335
+  pv:003 = checkout|||18|394
+  pv:004 = confirmation|||141|412
+  pv:005 = home|||54|553
+
+## Q4 - VALUE SCAN: a user's converted sessions (server-side SingleColumnValueFilter)  [175.6 ms]
+  35 converted sessions; first 3:
+  user_000420#8205915857#sess_7c403fe731 {'c:prod_01613': '3|116.12', 'c:prod_02539': '2|50.18', 's:start': '2026-11-07T23:42:22.152083', 's:status': 'converted'}
+  user_000420#8205928476#sess_1596806820 {'c:prod_00525': '1|263.62', 's:start': '2026-11-07T20:12:03.852049', 's:status': 'converted'}
+  user_000420#8206261405#sess_227ed130fa {'c:prod_00726': '2|343.28', 's:start': '2026-11-03T23:43:14.611313', 's:status': 'converted'}
+
+## Q5 - HYBRID SCAN: row-key range across users AND one column family + value filter  [152.1 ms]
+  674 mobile sessions for users 100-199 (sampled users only: 100,110,...,190)
+
+## Q6 - product time-series RANGE SCAN: one product, one month  [31.1 ms]
+  prod_00640 202611: 11 days with activity
+  prod_00640#20261101 {'m:cart_adds': '21', 'm:orders': '3', 'm:revenue': '3249.9', 'm:units_sold': '9', 'm:view_seconds': '6445', 'm:views': '38'}
+  prod_00640#20261102 {'m:cart_adds': '26', 'm:orders': '1', 'm:revenue': '722.2', 'm:units_sold': '2', 'm:view_seconds': '6391', 'm:views': '34'}
+  prod_00640#20261103 {'m:cart_adds': '11', 'm:orders': '7', 'm:revenue': '5777.6', 'm:units_sold': '16', 'm:view_seconds': '9741', 'm:views': '32'}
+  prod_00640#20261104 {'m:cart_adds': '8', 'm:orders': '2', 'm:revenue': '1444.4', 'm:units_sold': '4', 'm:view_seconds': '4538', 'm:views': '22'}
+  prod_00640#20261105 {'m:cart_adds': '17', 'm:view_seconds': '4027', 'm:views': '29'}
+  prod_00640#20261106 {'m:cart_adds': '17', 'm:orders': '1', 'm:revenue': '722.2', 'm:units_sold': '2', 'm:view_seconds': '5924', 'm:views': '29'}
+  prod_00640#20261107 {'m:cart_adds': '15', 'm:orders': '3', 'm:revenue': '2166.6', 'm:units_sold': '6', 'm:view_seconds': '3960', 'm:views': '23'}

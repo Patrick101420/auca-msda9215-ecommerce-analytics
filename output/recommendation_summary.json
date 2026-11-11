@@ -1,0 +1,23 @@
+{
+  "sessions": 2000000,
+  "sessions_with_2plus_viewed_products": 1720113,
+  "coview_observed": {
+    "pairs": 1687228,
+    "mean_lift": 1.791,
+    "median": 1.428,
+    "p95": 3.263,
+    "p99": 7.746,
+    "max": 559.701
+  },
+  "coview_shuffled_null": {
+    "pairs": 1669329,
+    "mean_lift": 1.783,
+    "median": 1.431,
+    "p95": 3.606,
+    "p99": 5.907,
+    "max": 96.987
+  },
+  "copurchase_pairs_total": 589516,
+  "copurchase_max_orders_together": 5,
+  "copurchase_pairs_seen_2plus": 20968
+}

@@ -1,0 +1,44 @@
+
+===== p1_revenue_by_category_month  (100 rows, 1,141 ms) =====
+{"units": 16332, "month": "2026-08", "category": "Cameron-Parsons", "revenue": 4526066.73, "top3_products": [{"product": "Grass-Roots Attitude-Oriented Encryption", "revenue": 62076.16}, {"product": "Team-Oriented Tangible Secured Line", "revenue": 61938.0}, {"product": "Reduced User-Facing System Engine", "revenue": 59102.12}]}
+{"units": 17724, "month": "2026-08", "category": "Kelly-Santiago", "revenue": 4450949.42, "top3_products": [{"product": "Progressive Heuristic Throughput", "revenue": 63599.27}, {"product": "Total Optimizing Infrastructure", "revenue": 62669.6}, {"product": "User-Friendly Value-Added Capability", "revenue": 61908.93}]}
+{"units": 17838, "month": "2026-08", "category": "Anderson, Walls and Duncan", "revenue": 4393825.23, "top3_products": [{"product": "Quality-Focused Radical Installation", "revenue": 67115.28}, {"product": "User-Friendly Foreground Knowledge User", "revenue": 63175.17}, {"product": "Devolved Impactful Project", "revenue": 62392.95}]}
+{"units": 15530, "month": "2026-08", "category": "Mitchell-Kim", "revenue": 4164501.04, "top3_products": [{"product": "Reverse-Engineered Maximized Task-Force", "revenue": 64183.74}, {"product": "Secured Homogeneous Framework", "revenue": 62831.34}, {"product": "Self-Enabling Transitional Internet Solution", "revenue": 62616.86}]}
+{"units": 16583, "month": "2026-08", "category": "Powell PLC", "revenue": 4162415.41, "top3_products": [{"product": "Sharable Systematic Parallelism", "revenue": 76773.36}, {"product": "Cloned Maximized Portal", "revenue": 66030.1}, {"product": "Triple-Buffered Neutral Firmware", "revenue": 58865.92}]}
+{"units": 15782, "month": "2026-08", "category": "Burns-Rodriguez", "revenue": 4117019.47, "top3_products": [{"product": "Programmable Contextually-Based Complexity", "revenue": 73385.86}, {"product": "Multi-Tiered Optimizing Function", "revenue": 62679.21}, {"product": "Organic Disintermediate Hierarchy", "revenue": 59088.45}]}
+{"units": 16933, "month": "2026-08", "category": "Phillips Inc", "revenue": 4099697.58, "top3_products": [{"product": "Profound High-Level Adapter", "revenue": 65988.56}, {"product": "User-Centric Uniform Strategy", "revenue": 65690.72}, {"product": "Team-Oriented Hybrid Artificial Intelligence", "revenue": 61113.24}]}
+{"units": 16062, "month": "2026-08", "category": "Bush Inc", "revenue": 4093975.98, "top3_products": [{"product": "Cross-Platform Tangible Moratorium", "revenue": 61895.31}, {"product": "Secured Leadingedge Methodology", "revenue": 60527.52}, {"product": "Inverse Reciprocal Functionalities", "revenue": 59861.55}]}
+{"units": 15466, "month": "2026-08", "category": "Patterson, Smith and Jones", "revenue": 4062163.92, "top3_products": [{"product": "Distributed Optimizing Framework", "revenue": 71559.68}, {"product": "Inverse Client-Server Array", "revenue": 67602.0}, {"product": "Down-Sized 6Thgeneration Solution", "revenue": 62574.12}]}
+{"units": 15479, "month": "2026-08", "category": "Ellis, Baker and Wright", "revenue": 4052840.91, "top3_products": [{"product": "Phased Bottom-Line Hardware", "revenue": 76180.34}, {"product": "Organic Uniform Success", "revenue": 73943.76}, {"product": "Vision-Oriented Executive Encoding", "revenue": 68164.54}]}
+
+===== p2_user_segments  (5 rows, 17 ms) =====
+{"users": 2000, "spend_from": 19746.0, "spend_to": 39814.0, "revenue": 71557997.0, "avg_orders": 42.1, "avg_aov": 855.21, "avg_recency_hours": 50.7, "discount_pct_of_revenue": 2.65}
+{"users": 2000, "spend_from": 39814.0, "spend_to": 44352.0, "revenue": 84391585.0, "avg_orders": 46.9, "avg_aov": 906.61, "avg_recency_hours": 46.5, "discount_pct_of_revenue": 2.56}
+{"users": 2000, "spend_from": 44352.0, "spend_to": 48483.0, "revenue": 92770518.0, "avg_orders": 50.0, "avg_aov": 933.8, "avg_recency_hours": 44.7, "discount_pct_of_revenue": 2.57}
+{"users": 2000, "spend_from": 48483.0, "spend_to": 53389.0, "revenue": 101552650.0, "avg_orders": 53.0, "avg_aov": 962.81, "avg_recency_hours": 40.6, "discount_pct_of_revenue": 2.49}
+{"users": 2000, "spend_from": 53389.0, "spend_to": 80882.0, "revenue": 116303413.0, "avg_orders": 58.0, "avg_aov": 1007.06, "avg_recency_hours": 38.7, "discount_pct_of_revenue": 2.47}
+
+===== p2b_orders_per_user_buckets  (7 rows, 11 ms) =====
+{"_id": 1, "users": 3, "spent": 79422.56}
+{"_id": 30, "users": 615, "spent": 20993794.91}
+{"_id": 40, "users": 4186, "spent": 177213252.76}
+{"_id": 50, "users": 2622, "spent": 126827922.44}
+{"_id": 55, "users": 1689, "spent": 89521487.25}
+{"_id": 60, "users": 838, "spent": 48720581.85}
+{"_id": 70, "users": 47, "spent": 3219701.45}
+
+===== p3_viewed_vs_sold  (20 rows, 19,714 ms) =====
+{"views": 898, "product_id": "prod_00640", "name": "Synergized Exuding Strategy", "category": "Moore, Becker and Carlson", "avg_view_seconds": 193.0, "units_sold": 172, "revenue": 62109.2, "units_per_100_views": 19.15}
+{"views": 887, "product_id": "prod_04458", "name": "Cross-Group Modular Secured Line", "category": "Hancock Inc", "avg_view_seconds": 189.0, "units_sold": 188, "revenue": 46013.0, "units_per_100_views": 21.2}
+{"views": 876, "product_id": "prod_02427", "name": "Configurable Explicit Definition", "category": "Mitchell-Kim", "avg_view_seconds": 184.0, "units_sold": 195, "revenue": 12199.2, "units_per_100_views": 22.26}
+{"views": 874, "product_id": "prod_03033", "name": "Managed Heuristic Pricing Structure", "category": "Carney-Santos", "avg_view_seconds": 186.0, "units_sold": 190, "revenue": 26136.4, "units_per_100_views": 21.74}
+{"views": 873, "product_id": "prod_00029", "name": "Digitized Solution-Oriented Solution", "category": "Skinner-Romero", "avg_view_seconds": 189.0, "units_sold": 150, "revenue": 13018.5, "units_per_100_views": 17.18}
+{"views": 872, "product_id": "prod_03324", "name": "Team-Oriented Hybrid Artificial Intelligence", "category": "Phillips Inc", "avg_view_seconds": 177.0, "units_sold": 211, "revenue": 121649.94, "units_per_100_views": 24.2}
+{"views": 872, "product_id": "prod_03788", "name": "Switchable Real-Time Hierarchy", "category": "Rodriguez-Graham", "avg_view_seconds": 177.0, "units_sold": 211, "revenue": 52855.5, "units_per_100_views": 24.2}
+{"views": 870, "product_id": "prod_02081", "name": "Cross-Platform Homogeneous Definition", "category": "Baldwin Ltd", "avg_view_seconds": 182.0, "units_sold": 189, "revenue": 83250.72, "units_per_100_views": 21.72}
+{"views": 870, "product_id": "prod_04714", "name": "Multi-Channeled Human-Resource Frame", "category": "Hancock Inc", "avg_view_seconds": 181.0, "units_sold": 184, "revenue": 22573.12, "units_per_100_views": 21.15}
+{"views": 867, "product_id": "prod_02158", "name": "Proactive Systemic Monitoring", "category": "Brewer, Bryant and Hickman", "avg_view_seconds": 179.0, "units_sold": 176, "revenue": 8935.52, "units_per_100_views": 20.3}
+
+explain[user's recent orders]: stages=['LIMIT', 'FETCH', 'IXSCAN'] keysExamined=10 docsExamined=10 ms=0
+
+explain[orders containing a product]: stages=['LIMIT', 'FETCH', 'IXSCAN'] keysExamined=10 docsExamined=10 ms=0

@@ -1,0 +1,29 @@
+# HBase shell equivalents of hbase/queries.py
+#   docker exec -i ecom-hbase hbase shell -n < hbase/queries.hbase
+# Reverse timestamp used in row keys: 9999999999 - epoch_seconds(start_time)
+
+# Q1 last 5 sessions of a user, newest first, summary family only
+scan 'user_activity', {ROWPREFIXFILTER => 'user_000420#', COLUMNS => ['s'], LIMIT => 5}
+
+# Q2 RANGE SCAN - sessions of user_000420 between 2026-10-26 and 2026-11-09 16:48:30 UTC
+#   later date -> START row (newest first), earlier date -> STOP row
+#   epoch(2026-11-09T16:48:30Z)=1794328110 -> 8205671889 ; epoch(2026-10-26T00:00:00Z)=1793059200 -> 8206940799
+scan 'user_activity', {STARTROW => 'user_000420#8205671889', STOPROW => 'user_000420#8206940799', COLUMNS => ['s:start','s:status','s:dur']}
+
+# Q3 one session's click-stream and cart (page-view + cart families)
+get 'user_activity', 'user_000420#8205767889#sess_2d79c34f4b', {COLUMN => ['pv','c']}
+
+# Q4 VALUE SCAN - converted sessions only (filter runs inside the RegionServer)
+scan 'user_activity', {ROWPREFIXFILTER => 'user_000420#', COLUMNS => ['s:start','s:status','c'], FILTER => "SingleColumnValueFilter('s','status',=,'binary:converted',true,true)"}
+
+# Q5 HYBRID SCAN - row range across users + one family + value filter
+scan 'user_activity', {STARTROW => 'user_000100', STOPROW => 'user_000200', COLUMNS => ['s'], FILTER => "SingleColumnValueFilter('s','dev',=,'binary:mobile',true,true)", LIMIT => 10}
+
+# Q6 product time series - one product, November 2026
+scan 'product_daily', {STARTROW => 'prod_00640#20261101', STOPROW => 'prod_00640#20261201', COLUMNS => ['m']}
+
+# Q7 product row, device breakdown only (sparse family)
+get 'product_daily', 'prod_00640#20261103', {COLUMN => 'dv'}
+
+# table sizes
+count 'product_daily', INTERVAL => 100000

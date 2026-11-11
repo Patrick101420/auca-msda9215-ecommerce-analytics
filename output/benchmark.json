@@ -1,0 +1,12 @@
+{
+  "QA_mongo_ms": 0.3,
+  "QA_hbase_ms": 3.5,
+  "QA_spark_ms": 137.9,
+  "QA_same_answer": true,
+  "QB_mongo_ms": 17494.3,
+  "QB_hbase_ms": 1942.8,
+  "QB_spark_ms": 86.0,
+  "QB_spark_partitions_pruned": true,
+  "QB_mongo_vs_spark_same_top20": true,
+  "QB_hbase_note": "HBase aggregates by DAY (calendar-day boundary), Mongo/Spark by exact timestamp; top-20 may differ at the edges"
+}

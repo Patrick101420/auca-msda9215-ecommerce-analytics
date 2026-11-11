@@ -1,0 +1,20 @@
+{
+  "total_revenue": 478419521.55,
+  "products_by_state": {
+    "in_stock": 2274,
+    "inactive": 234,
+    "sold_out": 2492
+  },
+  "v1_naive_leakage_rejected": 125925052.27,
+  "stockout_est_lost_units": 993231.0,
+  "stockout_est_lost_revenue": 252512041.53,
+  "stockout_loss_pct_of_revenue": 52.8,
+  "instock_conversion_leakage": 7419111.36,
+  "instock_leakage_pct_of_revenue": 1.6,
+  "instock_leakage_share_top50_products": 0.191,
+  "views_on_inactive_products": 322,
+  "timings_s": {
+    "hbase_scan": 5.46,
+    "mongo_find": 0.02
+  }
+}

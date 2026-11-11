@@ -1,0 +1,53 @@
+{
+  "window_start": "2026-08-13 12:36:55.542000",
+  "window_end": "2026-11-11 13:29:37.899000",
+  "cutoff": "2026-10-12 12:36:55.542000",
+  "modelling_users": 1000,
+  "model_selected_for_clv": "M1_history",
+  "models": {
+    "M1_history": {
+      "test_r2": -0.0099,
+      "test_mae": 3522.68,
+      "test_rmse": 4305.38,
+      "coefficients(std)": {
+        "cal_orders": 150.6,
+        "cal_spend": -279.72,
+        "recency_days": -154.27,
+        "tenure_days": 108.57
+      }
+    },
+    "M2_history_plus_engagement": {
+      "test_r2": -0.0181,
+      "test_mae": 3527.08,
+      "test_rmse": 4322.77,
+      "coefficients(std)": {
+        "cal_orders": 7.06,
+        "cal_spend": -250.57,
+        "recency_days": -165.36,
+        "tenure_days": 93.29,
+        "sessions": 81.91,
+        "session_minutes": -420.98,
+        "page_views": 552.7,
+        "converted_sessions": 2.82
+      }
+    },
+    "baseline_half_of_60d_spend": {
+      "test_mae": 4356.53
+    }
+  },
+  "pearson_corr_with_holdout_spend": {
+    "cal_orders": -0.0154,
+    "cal_spend": -0.0235,
+    "recency_days": -0.009,
+    "tenure_days": 0.0189,
+    "sessions": 0.0346,
+    "session_minutes": 0.0208,
+    "page_views": 0.0393,
+    "converted_sessions": 0.0332
+  },
+  "top_decile_share_of_actual_holdout_spend": 0.1003,
+  "timings": {
+    "mongo_txn_agg_s": 0.46,
+    "hbase_engagement_scan_s": 2.59
+  }
+}

@@ -1,0 +1,138 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+12:55:59 WARN TaskSetManager: Stage 0 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:00 WARN TaskSetManager: Stage 1 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:01 WARN TaskSetManager: Stage 5 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+12:56:01 WARN TaskSetManager: Stage 14 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:02 WARN TaskSetManager: Stage 31 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:02 WARN TaskSetManager: Stage 32 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:03 WARN TaskSetManager: Stage 52 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:03 WARN TaskSetManager: Stage 53 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:03 WARN TaskSetManager: Stage 72 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+12:56:04 WARN TaskSetManager: Stage 88 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:04 WARN TaskSetManager: Stage 89 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:298: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/sql/pandas/conversion.py:348: UserWarning: toPandas attempted Arrow optimization because 'spark.sql.execution.arrow.pyspark.enabled' is set to true; however, failed by the reason below:
+  [PACKAGE_NOT_INSTALLED] PyArrow >= 18.0.0 must be installed; however, it was not found.
+Attempting non-optimization as 'spark.sql.execution.arrow.pyspark.fallback.enabled' is set to true.
+  warn(msg)
+12:56:04 WARN TaskSetManager: Stage 108 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:05 WARN TaskSetManager: Stage 130 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+12:56:05 WARN TaskSetManager: Stage 161 contains a task of very large size (1513 KiB). The maximum recommended task size is 1000 KiB.
+[hbase] product_daily: 421,769 rows in 4.0s
++--------+--------+---------+---------+------------------+----------------+------------+
+|   state|products|avg_views|avg_units|avg_units_per_view|views_h2_over_h1|     revenue|
++--------+--------+---------+---------+------------------+----------------+------------+
+|in_stock|    2274|   2378.0|    535.0|             0.225|           1.022|3.02115258E8|
+|inactive|     234|      1.0|      0.0|               0.0|           1.317|         0.0|
+|sold_out|    2492|    605.0|    276.0|             0.473|           1.017|1.76304263E8|
++--------+--------+---------+---------+------------------+----------------+------------+
+
+Largest estimated losses from stock-outs
++----------+--------------------------+------+-----+-----+-----+------------------------+-----------+----------+------------+
+|product_id|             category_name| price|views|units|  upv|cat_instock_median_views|cat_med_upv|lost_units|lost_revenue|
++----------+--------------------------+------+-----+-----+-----+------------------------+-----------+----------+------------+
+|prod_04334|              Phillips Inc| 560.5|   91|   44|0.484|                    2371|      0.225|     512.9|   287457.09|
+|prod_02938|                  Bush Inc|549.08|  104|   53| 0.51|                    2381|      0.228|     519.0|   284946.68|
+|prod_02372|              Owens-Daniel|559.81|  106|   57|0.538|                    2376|      0.223|     506.9|   283769.11|
+|prod_04140|             Carney-Santos|533.89|   77|   50|0.649|                    2379|      0.226|     520.6|   277936.09|
+|prod_00147|Brewer, Bryant and Hickman| 581.7|  263|  139|0.529|                    2387|      0.223|     473.9|   275670.92|
+|prod_02591| Moore, Becker and Carlson|568.08|  239|  109|0.456|                    2382|      0.224|     480.5|   272944.71|
+|prod_01694|               Preston Ltd|511.83|   59|   30|0.508|                    2391|      0.225|     524.9|   268673.01|
+|prod_01859|          Rodriguez-Graham|523.22|  121|   68|0.562|                    2369|      0.227|     509.7|   266701.81|
+|prod_01782|          Rodriguez-Graham|533.29|  168|   62|0.369|                    2369|      0.227|     499.1|   266151.43|
+|prod_00021|            Wright-Leblanc| 544.9|  185|   92|0.497|                    2374|      0.223|     488.3|   266052.62|
++----------+--------------------------+------+-----+-----+-----+------------------------+-----------+----------+------------+
+only showing top 10 rows
+In-stock products converting furthest below category peers
++----------+--------------------------+------+-----+-----+-----+------------------------+-----------+----------+------------+
+|product_id|             category_name| price|views|units|  upv|cat_instock_median_views|cat_med_upv|lost_units|lost_revenue|
++----------+--------------------------+------+-----+-----+-----+------------------------+-----------+----------+------------+
+|prod_04338|           Burns-Rodriguez|489.19| 2400|  425|0.177|                    2382|      0.225|     115.0|    56244.46|
+|prod_03552|           Burns-Rodriguez|551.37| 2394|  455| 0.19|                    2382|      0.225|      83.6|    46108.17|
+|prod_04919|                Powell PLC|384.68| 2479|  442|0.178|                    2377|      0.223|     110.9|    42663.63|
+|prod_02232|Brewer, Bryant and Hickman|471.62| 2401|  447|0.186|                    2387|      0.223|      88.7|    41837.28|
+|prod_00968|              Phillips Inc|379.63| 2393|  442|0.185|                    2371|      0.225|      96.3|    36549.37|
+|prod_00778|              Mitchell-Kim|436.74| 2448|  468|0.191|                    2372|      0.225|      83.7|    36544.87|
+|prod_02281|Anderson, Walls and Duncan|346.05| 2415|  439|0.182|                    2371|      0.224|     102.4|    35447.29|
+|prod_02467|               Preston Ltd|509.43| 2378|  469|0.197|                    2391|      0.225|      66.3|    33765.39|
+|prod_01286|                Powell PLC|501.38| 2380|  464|0.195|                    2377|      0.223|      66.8|    33505.33|
+|prod_02245|           Cameron-Parsons|395.36| 2414|  461|0.191|                    2366|      0.224|      80.1|    31670.36|
++----------+--------------------------+------+-----+-----+-----+------------------------+-----------+----------+------------+
+only showing top 10 rows
++-------------------------------+--------+--------+-----------+-------------+---------------+------------+------------------------+
+|category_name                  |products|sold_out|revenue    |stockout_loss|conversion_leak|sold_out_pct|stockout_loss_pct_of_rev|
++-------------------------------+--------+--------+-----------+-------------+---------------+------------+------------------------+
+|Kelly-Santiago                 |231     |117     |2.1715954E7|1.3320215E7  |319735.0       |50.6        |61.3                    |
+|Rodriguez-Graham               |191     |111     |1.7726043E7|1.1597697E7  |233940.0       |58.1        |65.4                    |
+|Patterson, Smith and Jones     |201     |106     |1.9385011E7|1.1436135E7  |306587.0       |52.7        |59.0                    |
+|Ellis, Baker and Wright        |202     |111     |1.9525723E7|1.1235063E7  |241471.0       |55.0        |57.5                    |
+|Hancock Inc                    |220     |110     |1.9841427E7|1.1011081E7  |286499.0       |50.0        |55.5                    |
+|Baldwin Ltd                    |213     |114     |1.791479E7 |1.09653E7    |258554.0       |53.5        |61.2                    |
+|Owens-Daniel                   |203     |103     |1.8831183E7|1.0881641E7  |262555.0       |50.7        |57.8                    |
+|Cameron-Parsons                |217     |110     |2.2221952E7|1.0804385E7  |365730.0       |50.7        |48.6                    |
+|Bush Inc                       |205     |105     |1.972927E7 |1.0695266E7  |366785.0       |51.2        |54.2                    |
+|Phillips Inc                   |211     |93      |2.0207519E7|1.0406631E7  |325597.0       |44.1        |51.5                    |
+|Carney-Santos                  |215     |112     |2.0032699E7|1.0388681E7  |264289.0       |52.1        |51.9                    |
+|Burns-Rodriguez                |202     |102     |2.0148872E7|1.0209069E7  |425623.0       |50.5        |50.7                    |
+|Anderson, Walls and Duncan     |217     |101     |2.1434231E7|1.0041383E7  |377212.0       |46.5        |46.8                    |
+|James LLC                      |190     |94      |1.7356677E7|9769838.0    |272594.0       |49.5        |56.3                    |
+|Mitchell-Kim                   |204     |96      |2.0421852E7|9550165.0    |336632.0       |47.1        |46.8                    |
+|Smith Ltd                      |181     |100     |1.725546E7 |9482956.0    |193987.0       |55.2        |55.0                    |
+|Brewer, Bryant and Hickman     |212     |100     |1.9327963E7|9474804.0    |290768.0       |47.2        |49.0                    |
+|Spence PLC                     |186     |92      |1.9687441E7|9383280.0    |284574.0       |49.5        |47.7                    |
+|Moore, Becker and Carlson      |183     |91      |1.8011807E7|9360945.0    |214420.0       |49.7        |52.0                    |
+|Preston Ltd                    |198     |82      |1.8694018E7|9092520.0    |354825.0       |41.4        |48.6                    |
+|Rodriguez, Figueroa and Sanchez|173     |92      |1.6484168E7|9057209.0    |255692.0       |53.2        |54.9                    |
+|Wright-Leblanc                 |176     |94      |1.6996705E7|9034380.0    |247293.0       |53.4        |53.2                    |
+|King-Odonnell                  |181     |85      |1.7260397E7|8754891.0    |248597.0       |47.0        |50.7                    |
+|Powell PLC                     |205     |92      |2.026524E7 |8565701.0    |429300.0       |44.9        |42.3                    |
+|Skinner-Romero                 |183     |79      |1.7943119E7|7992806.0    |255853.0       |43.2        |44.5                    |
++-------------------------------+--------+--------+-----------+-------------+---------------+------------+------------------------+
+
+{
+  "total_revenue": 478419521.55,
+  "products_by_state": {
+    "in_stock": 2274,
+    "inactive": 234,
+    "sold_out": 2492
+  },
+  "v1_naive_leakage_rejected": 125925052.27,
+  "stockout_est_lost_units": 993231.0,
+  "stockout_est_lost_revenue": 252512041.53,
+  "stockout_loss_pct_of_revenue": 52.8,
+  "instock_conversion_leakage": 7419111.36,
+  "instock_leakage_pct_of_revenue": 1.6,
+  "instock_leakage_share_top50_products": 0.191,
+  "views_on_inactive_products": 322,
+  "timings_s": {
+    "hbase_scan": 5.46,
+    "mongo_find": 0.02
+  }
+}

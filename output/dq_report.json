@@ -1,0 +1,37 @@
+{
+  "users": {
+    "rows_raw": 10000,
+    "rows_clean": 10000,
+    "null_registration_date": 0,
+    "non_us_country_with_us_state": 9952
+  },
+  "products": {
+    "rows": 5000,
+    "missing_subcategory_id": 5000,
+    "inactive": 234,
+    "out_of_stock": 2492
+  },
+  "transactions": {
+    "rows": 500000,
+    "unlinked_to_session": 243389,
+    "subtotal_ne_sum_items": 0,
+    "total_ne_subtotal_minus_discount": 0,
+    "empty_items": 0
+  },
+  "sessions": {
+    "rows": 2000000,
+    "status_counts": {
+      "converted": 405887,
+      "browsed": 701245,
+      "abandoned": 892868
+    },
+    "duration_mismatch": 0,
+    "checkout_without_cart": 293882,
+    "converted_without_transaction": 149276,
+    "session_id_collisions": 2
+  },
+  "page_views": {
+    "rows": 19999622
+  },
+  "runtime_seconds": 91.3
+}

@@ -1,0 +1,30 @@
+# Local infrastructure for the project.
+#   docker compose up -d
+# MongoDB runs natively on arm64. The HBase image is amd64-only and runs under emulation
+# on Apple Silicon. That is fine for a functional demo, but it makes HBase write
+# throughput a poor benchmark (see report: limitations).
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: ecom-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    command: ["mongod", "--wiredTigerCacheSizeGB", "2"]
+
+  hbase:
+    image: harisekhon/hbase:2.1
+    platform: linux/amd64
+    container_name: ecom-hbase
+    hostname: hbase
+    ports:
+      - "16010:16010"   # HMaster web UI
+      - "9090:9090"     # Thrift server (used by happybase)
+      - "2181:2181"     # ZooKeeper
+    volumes:
+      - hbase-data:/hbase-data
+
+volumes:
+  mongo-data:
+  hbase-data:

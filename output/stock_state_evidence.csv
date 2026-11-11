@@ -1,0 +1,4 @@
+state,products,avg_views,avg_units,avg_units_per_view,views_h2_over_h1,revenue
+in_stock,2274,2378.0,535.0,0.225,1.022,302115258.0
+inactive,234,1.0,0.0,0.0,1.317,0.0
+sold_out,2492,605.0,276.0,0.473,1.017,176304263.0

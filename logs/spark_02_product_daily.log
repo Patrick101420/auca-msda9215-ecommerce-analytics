@@ -1,0 +1,10 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+/Users/patrick/AUCA BIG DATA/BIG DATA ANALYTICS/final_project/.venv/lib/python3.12/site-packages/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas >= 3.0.0. Some features may not work correctly. It is recommended to use pandas < 3.0.0 for now.
+  require_minimum_pandas_version()
+product_daily rows: 421769
++--------+----------+----------+----------+--------------+---------------+----------------------+
+|products|min(day)  |max(day)  |sum(views)|sum(cart_adds)|sum(units_sold)|round(sum(revenue), 2)|
++--------+----------+----------+----------+--------------+---------------+----------------------+
+|4940    |2026-08-13|2026-11-11|6917511   |4137771       |1904763        |4.7841952155E8        |
++--------+----------+----------+----------+--------------+---------------+----------------------+
+

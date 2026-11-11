@@ -1,0 +1,55 @@
+{
+ "ms": 17,
+ "rows": [
+  {
+   "users": 2000,
+   "spend_from": 19746.0,
+   "spend_to": 39814.0,
+   "revenue": 71557997.0,
+   "avg_orders": 42.1,
+   "avg_aov": 855.21,
+   "avg_recency_hours": 50.7,
+   "discount_pct_of_revenue": 2.65
+  },
+  {
+   "users": 2000,
+   "spend_from": 39814.0,
+   "spend_to": 44352.0,
+   "revenue": 84391585.0,
+   "avg_orders": 46.9,
+   "avg_aov": 906.61,
+   "avg_recency_hours": 46.5,
+   "discount_pct_of_revenue": 2.56
+  },
+  {
+   "users": 2000,
+   "spend_from": 44352.0,
+   "spend_to": 48483.0,
+   "revenue": 92770518.0,
+   "avg_orders": 50.0,
+   "avg_aov": 933.8,
+   "avg_recency_hours": 44.7,
+   "discount_pct_of_revenue": 2.57
+  },
+  {
+   "users": 2000,
+   "spend_from": 48483.0,
+   "spend_to": 53389.0,
+   "revenue": 101552650.0,
+   "avg_orders": 53.0,
+   "avg_aov": 962.81,
+   "avg_recency_hours": 40.6,
+   "discount_pct_of_revenue": 2.49
+  },
+  {
+   "users": 2000,
+   "spend_from": 53389.0,
+   "spend_to": 80882.0,
+   "revenue": 116303413.0,
+   "avg_orders": 58.0,
+   "avg_aov": 1007.06,
+   "avg_recency_hours": 38.7,
+   "discount_pct_of_revenue": 2.47
+  }
+ ]
+}

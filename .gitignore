@@ -12,3 +12,4 @@ derby.log
 output/product_daily_csv/
 output/coview_lift_observed.csv
 output/coview_lift_null.csv
+report/.build.html

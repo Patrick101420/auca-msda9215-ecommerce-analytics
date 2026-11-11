@@ -40,6 +40,7 @@ dataset_generator.py ──► data/raw/*.json (4.0 GB)
 | `integration/07_demand_leakage.py` | stock-out vs conversion losses, HBase + Mongo |
 | `integration/benchmark_engines.py` | same two questions on MongoDB, HBase and Spark |
 | `viz/make_figures.py` → `viz/figures/` | report figures |
+| `report/final_report.pdf` | technical report (AUCA format); rebuild with `python report/build_report.py` |
 | `output/` | every result table/JSON the report quotes |
 | `logs/` | console output of the actual runs |
 

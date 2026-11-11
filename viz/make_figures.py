@@ -98,7 +98,7 @@ ax.barh(yy, cat["est_gross_profit"], color=ORANGE, height=0.7, label="Estimated 
 ax.set_yticks(yy, cat.index, fontsize=8)
 ax.xaxis.set_major_formatter(money)
 ax.set_title("Revenue and estimated gross profit by category (90 days)")
-ax.legend(loc="lower right")
+ax.legend(loc="upper center", ncol=2, bbox_to_anchor=(0.5, -0.06))
 ax.grid(axis="y", visible=False)
 save(fig, "fig3_category_revenue.png")
 

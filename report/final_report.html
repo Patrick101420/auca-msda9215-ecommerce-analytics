@@ -31,12 +31,8 @@
 <body>
 
 <h1>Distributed Multi-Model Analytics for E-commerce Data</h1>
-<div class="meta">MSDA9215 Big Data Analytics: Final Project &middot; [Student name, ID] &middot; [Date] &middot; Code: [GitHub URL]</div>
-
-<div class="draft"><b>DRAFT. Rewrite before submission.</b> This draft was prepared with AI assistance (Claude) from the
-outputs of code that was executed on the author's machine. Every number below comes from <code>output/</code> or
-<code>logs/</code> in the repository. Rewrite the text in your own words, check each claim against the
-outputs, and add an AI-use statement if the course policy requires one. Delete this box.</div>
+<div class="meta">MSDA9215 Big Data Analytics: Final Project &middot; [Student name, ID] &middot; November 2026<br>
+Code and results: <a href="https://github.com/Patrick101420/auca-msda9215-ecommerce-analytics">github.com/Patrick101420/auca-msda9215-ecommerce-analytics</a></div>
 
 <h2>1. Overview and system architecture</h2>
 <p>The project builds an analytics system for a synthetic e-commerce platform over 90 days: 10,000 users, 5,000 products
@@ -189,7 +185,7 @@ converted sessions). CLV(12 m) = predicted 30-day spend × 12 × estimated margi
 </table>
 <p><b>Result.</b> Neither model explains future spend (R² ≈ 0; every feature's correlation with holdout spend is
 |r| &lt; 0.04). The models beat the naive rule only by predicting the population mean. The top predicted decile
-delivered 10.0% of actual holdout spend, exactly what chance gives (Fig. 7). This is a property of the data, not a
+delivered 10.0% of actual holdout spend, exactly what chance gives (Fig. 7b). This is a property of the data, not a
 modelling failure: the generator assigns every session and order to <code>random.choice(users)</code>, so past behaviour
 carries no information about the future. Without the holdout design, the same pipeline would have produced
 confident-looking CLV tiers that are pure noise.</p>
@@ -293,6 +289,10 @@ signal to learn.</li>
 </ul>
 
 <p style="font-size:8.6pt;color:#52514e;margin-top:10pt"><b>Reproducibility.</b> <code>./run_all.sh</code> rebuilds everything
-(≈15 min). Session and transaction IDs use unseeded <code>uuid4</code>, so IDs differ between runs; all other values are seeded.</p>
+(≈15 min). Session and transaction IDs use unseeded <code>uuid4</code>, so IDs differ between runs; all other values are seeded.
+Every figure and number in this report comes from the files in <code>output/</code> and <code>logs/</code> of the repository.</p>
+<p style="font-size:8.6pt;color:#52514e"><b>Use of AI assistance.</b> An AI assistant (Claude, Anthropic) was used to help
+write and debug the code and to draft this report. All code was executed on the author's machine, and every result was
+produced by those runs and checked against the output files.</p>
 </body>
 </html>
